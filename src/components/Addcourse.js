@@ -3,6 +3,7 @@ import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import base_url from "./../api/bootapi";
+import { useHistory } from 'react-router';
 
 
 
@@ -12,6 +13,7 @@ const Addcourse = () => {
         document.title = "Addcourse || code with vikas";
     }, []);
 
+    let history = useHistory();
     const [course, setCourse] = useState({});
 
     // //form handler function      
@@ -20,7 +22,8 @@ const Addcourse = () => {
         setCourse(course)
         console.log("course added") 
         console.log(course); 
-        postDatatoServer(course);        
+        postDatatoServer(course); 
+              
     };
 
     //creating function to post data on server   axios.get(`${base_url}/courses`)
@@ -31,7 +34,9 @@ const Addcourse = () => {
                 console.log('success');
                 // console.log(response.data);
                 toast.success("course has been Added");
-                // setCourse({id:"",title : "",description :""}) 
+                history.push("/view-courses")
+                console.log(" All") 
+               
             },
 
             (error) => {

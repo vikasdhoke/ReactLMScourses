@@ -31,10 +31,9 @@ function Update() {
        await axios.put(`${base_url}/courses/${id}`,course).then(
             (response) => {
                 console.log(response);
-                console.log('success');
-                // console.log(response.data);
-                toast.success("course has been Added");
-                // setCourse({id:"",title : "",description :""}) 
+                console.log('success');                
+                toast.success("course has been updated");
+                history.push("/view-courses")
             },
 
             (error) => {
