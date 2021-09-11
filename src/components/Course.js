@@ -1,6 +1,6 @@
-import React  from 'react';
+import React from 'react';
 import axios from "axios";
-import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {Card ,
     CardBody,
     CardTitle,
@@ -10,23 +10,26 @@ import {Card ,
 } from 'reactstrap';
 import base_url from "./../api/bootapi";
 import { toast } from 'react-toastify';
-import Updatecourse from './Updatecourse';
+// import Showcourse from './Showcourse';
+// import { useEffect } from 'react/cjs/react.development';
 
 // import Updatecourse from './Updatecourse';
-const Course=({course , update })=>{
+const Course=({course,update})=>{
+  let history = useHistory()   
 
-  const deleteCourse =(id) => {    
-    axios.delete(`${base_url}/courses`).then(
-      (response)=>{
-          //success
+
+
+  const deleteCourse =async (id) => {    
+    await axios.delete(`${base_url}/courses/${id}`).then(
+      (response)=>{         
           console.log(response);
-          console.log('success');
+          console.log('deleted ');
+          {history.push('/view-courses')}
+          // getAllCoursesFromServer()  ;  
           // console.log(response.data);
-          toast.success("course has been deleted"); 
-          update(id);
-          
+          // toast.success("course has been deleted"); 
+          update(id);          
       },
-
       (error) =>{
           //error
           console.log(error);
@@ -35,46 +38,6 @@ const Course=({course , update })=>{
       },
   )
   }
-
-  const showCourse = (id) => {
-      
-    console.log(id);
-    console.log(course); 
-    {
-      <Updatecourse/>
-
-    }
-
-    
-    
-
-    // postDatatoServer(course);
-    // e.preventDefault(); comment this for refreshing to null
-};
-
-  // const showCourse=(id)=>{
-  //   axios.get(`${base_url}/courses/`).then(
-  //     (response)=>{
-  //         //success           
-  //         console.log(response.data);
-  //         console.log('success');
-  //         // console.log(response.data);
-  //         toast.success("course has been shown"); 
-  //         // update(id);
-  //         // setCourse({})
-  //         // setCourses(response.data);
-  //     },
-
-  //     (error) =>{
-  //         //error
-  //         // console.log(error);
-  //         // console.log('error');
-  //         toast.success("Not shown ,something went wrong");       
-  //     },
-  // )
-
-
-  // }
 
    return(       
     <div>
@@ -91,15 +54,15 @@ const Course=({course , update })=>{
                         }} 
                         >Delete</Button>
 
-                        {/* <Button color="warning ml-3"  >Update</Button> */}
+                        {/* <Button color="warning ml-3"  >Update</Button> */}                        
 
-                        
-
-                        <Button color="warning ml-3"  onClick={()=>{
-                         showCourse (course.id)
-                        }}                        
-                        
-                         >Update</Button>
+                        <Button color="warning ml-3"  onClick={
+                          ()=>{
+                        // <Showcourse course={course.id} />
+                        history.push(`/update-course/${course.id}`)
+                        }  
+                        }                  
+                          >Update</Button>
 
                 </Container>
             </CardBody>

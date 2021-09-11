@@ -2,16 +2,16 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import base_url from "./../api/bootapi";
+import base_url from "../api/bootapi";
 
 
-const Updatecourse = () => {
+const Showcourse = () => {
 
     useEffect(() => {
-        document.title = "Updatecourse || code with vikas";
+        document.title = "Showcourse || code with vikas";
     }, []);
 
-    const [course, setCourse] = useState({});
+    const [course, setCourse] = useState({course});
 
     // //form handler function      
     const handleForm = (e) => {
@@ -23,8 +23,8 @@ const Updatecourse = () => {
     };
 
     //creating function to post data on server
-    const postDatatoServer = (data) => {
-        axios.post(`${base_url}/courses`, data).then(
+    const getDatafromServer = (id) => {
+        axios.get(`${base_url}/courses/${id}`).then(
             (response) => {
 
                 //success
@@ -43,9 +43,11 @@ const Updatecourse = () => {
                 toast.success("something went wrong");
             },
         )
-
-
     }
+
+    getDatafromServer();
+
+  
 
     return (
         <Fragment >
@@ -59,8 +61,8 @@ const Updatecourse = () => {
                     <Input type="text"
                         
                         value={course.id}
-                        name="userId"
-                        id="userId"
+                        // name="userId"
+                        // id="userId"
    
                         onChange={(e) => {
                             setCourse({ ...course, id: e.target.value });
@@ -73,7 +75,8 @@ const Updatecourse = () => {
 
                 <FormGroup>
                     <Label for="title" >Title</Label>
-                    <Input type="text" value={course.title} name="title" id="title"
+                    <Input type="text" value={course.title} 
+                    // name="title" id="title"
 
                         onChange={(e) => {
                             setCourse({ ...course, title: e.target.value });
@@ -85,7 +88,8 @@ const Updatecourse = () => {
                 <FormGroup>
                     <Label for="description" >Course Description</Label>
                     <Input
-                        type="textarea" value={course.description} name="description" id="description"
+                        type="textarea" value={course.description}
+                        //  name="description" id="description"
 
                         style={{ height: 200 }}
 
@@ -110,4 +114,4 @@ const Updatecourse = () => {
 
 }
 
-export default Updatecourse;
+export default Showcourse;

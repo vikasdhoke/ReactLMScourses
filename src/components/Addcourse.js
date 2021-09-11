@@ -1,10 +1,9 @@
-
-
 import React, { Fragment, useEffect, useState } from 'react';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import base_url from "./../api/bootapi";
+
 
 
 const Addcourse = () => {
@@ -17,16 +16,16 @@ const Addcourse = () => {
 
     // //form handler function      
     const handleForm = (e) => {
+        e.preventDefault();      
         setCourse(course)
-        console.log("test3") 
+        console.log("course added") 
         console.log(course); 
-        postDatatoServer(course);
-        // e.preventDefault(); comment this for refreshing to null
+        postDatatoServer(course);        
     };
 
-    //creating function to post data on server
-    const postDatatoServer = (data) => {
-        axios.post(`${base_url}/courses`, data).then(
+    //creating function to post data on server   axios.get(`${base_url}/courses`)
+    const postDatatoServer = async () => {
+       await axios.post(`${base_url}/courses`,course).then(
             (response) => {
                 console.log(response);
                 console.log('success');
@@ -42,8 +41,6 @@ const Addcourse = () => {
                 toast.success("something went wrong");
             },
         )
-
-
     }
 
     return (
@@ -54,44 +51,37 @@ const Addcourse = () => {
             <Form onSubmit={handleForm}>
 
                 <FormGroup> 
-                    <Label for="userId" >Course ID</Label>
+                    <Label for="courseId" >Course ID</Label>
                     <Input type="text"
                         placeholder="Eneter here"
-                        name="userId"
-                        id="userId"
-        
+                        name="id"
+                        // id="userId"        
                         onChange={(e) => {
                             setCourse({ ...course, id: e.target.value });
                         }}
                     />
-
                 </FormGroup>
 
 
                 <FormGroup>
                     <Label for="title" >Title</Label>
-                    <Input type="text" placeholder="Eneter title here" name="title" id="title"
+                    <Input type="text" placeholder="Eneter title here" name="title" //id="title"
 
                         onChange={(e) => {
                             setCourse({ ...course, title: e.target.value });
                         }}
                     />
-
                 </FormGroup>
 
                 <FormGroup>
                     <Label for="description" >Course Description</Label>
                     <Input
-                        type="textarea" placeholder="Eneter description here" name="description" id="description"
-
+                        type="textarea" placeholder="Eneter description here" name="description" //id="description"
                         style={{ height: 200 }}
-
                         onChange={(e) => {
                             setCourse({ ...course, description: e.target.value });
                         }}
-
                     />
-
                 </FormGroup>
 
                 <Container className="text-center" >

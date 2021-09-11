@@ -5,24 +5,20 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 // import { Button } from 'reactstrap';
 
-// import Course from './components/Course';
+const Allcourses=()=>{
+    const [courses, setCourses] = useState([]);
 
-const Allcourses=()=>{    
     useEffect(()=>{
         document.title="All courses";
     }, []);
 
-
     // function to call server
-    const getAllCoursesFromServer =()=>{
-
-        axios.get(`${base_url}/courses`).then(
-            (response)=>{
-                //success
-                // console.log(response);
+    const getAllCoursesFromServer = async () =>{
+       await axios.get(`${base_url}/courses`).then(
+            (response)=>{                
                 console.log(response.data);
                 toast.success("courses have been loaded");
-                setCourses(response.data);
+                setCourses(response.data.reverse());
             },
             (error) =>{
                 //error
@@ -30,54 +26,31 @@ const Allcourses=()=>{
                 toast.success("something went wrong");
             },
         )
-
     }   
 // calling course function
     useEffect(() => {
-         getAllCoursesFromServer()  ;
-            
+         getAllCoursesFromServer()  ;            
     } , []);
-
-//     useEffect(() => {
-//         alert("testing")  ;
-           
-//    } );
-
-
-    const [courses, setCourses]=useState([
-        // {title:"Java Course" , description : "This demo Java Course"  },
-        // {title: "Django Course" ,description : "This demo Django Course"  },
-        // {title: "Python Course" ,description : "This demo Python Course"  },
-        // {title: "Angular Course" ,description : "This demo Angular Course"  }    
-    ]);
-
+    
     const updateCourses1 =(id)=>{
-        setCourses(courses.filter((c)=>c.id!=id))
-
+        setCourses(courses.filter((c)=>c.id!==id));
+        
     }
 
     return(
 
-    <div>
-
-
-        
+    <div>        
             <h1>All courses</h1> 
-
             <p>List Of Courses are as follows </p>  
-
             {               
                 courses.length>0
-                ?  courses.map((item)=>(  <Course key={item.id} course={item} update ={updateCourses1} />    ))
+                ?  courses.map((item)=>(  <Course key={item.id} course={item}
+                 update = {updateCourses1} 
+                 />  ))
                     : "No courses"
-
             } 
-
     </div>
-
-
     );
-
 };
 
 export default Allcourses;

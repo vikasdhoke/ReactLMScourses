@@ -8,18 +8,19 @@ import Header from './components/Header';
 import Menus from './components/Menus';
 import Allcourses from './components/Allcourses';
 import Addcourse from './components/Addcourse';
-import Updatecourse from './components/Updatecourse';
+// import Showcourse from './components/Showcourse';
 import { Col, Container, Row } from 'reactstrap';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import Update from './components/Update';
 
 
 function App() {
-  const notify = () => {
+  // const notify = () => {
 
-    toast.success("Done", { position: 'top-center' }
+  //   toast.success("Done", { position: 'top-center' }
 
-    );
-  };
+  //   );
+  // };
 
   return (
 
@@ -41,23 +42,16 @@ function App() {
 
             <Col md={8}>
 
-              <Route path="/" component = {Home}  exact />
-              <Route path="/add-course" component = {Addcourse}  exact />
-              <Route path="/update-course" component = {Updatecourse}  exact />
-              <Route path="/view-courses" component = {Allcourses}  exact />
-            
+              <Route path="/" component={Home} exact />
+              <Route path="/add-course" component={Addcourse} exact />
+              <Route path="/update-course/:id" component={Update} exact />
+              <Route path="/view-courses" component={Allcourses} exact />
             </Col>
 
           </Row>
 
         </Container>
-
-
-
       </Router>
-
-
-
     </div>
   );
 }
